@@ -42,6 +42,7 @@ INSTALLED_APPS = [
 
     'main',
     'goods',
+    'debug_toolbar',
 ]
 
 MIDDLEWARE = [
@@ -52,6 +53,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 'home_furniture_store.urls'
@@ -70,6 +73,11 @@ TEMPLATES = [
             ],
         },
     },
+]
+
+INTERNAL_IPS = [
+    '127.0.0.1',
+    'localhost'
 ]
 
 WSGI_APPLICATION = 'home_furniture_store.wsgi.application'
