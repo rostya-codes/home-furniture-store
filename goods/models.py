@@ -36,4 +36,5 @@ class Product(models.Model):
         verbose_name = 'Продукт'  # Альтернативное название для отображения в админ панели
         verbose_name_plural = 'Продукты'  # Множественное число
 
-
+    def display_id(self):
+        return f'{self.id:05}'
