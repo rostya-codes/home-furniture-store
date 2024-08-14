@@ -11,7 +11,7 @@ def catalog(request, category_slug):
     if category_slug == 'all':
         goods = Product.objects.all()
     else:
-        goods = Product.objects.filter(category__slug=category_slug)
+        goods = Product.objects.filter(category__slug=category_slug)  # todo: get_object_or_404
 
     context = {
         'title': 'Home - Каталог',
