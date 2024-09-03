@@ -4,7 +4,9 @@ from django.core.paginator import Paginator
 from goods.models import Product
 
 
-def catalog(request, category_slug, page=1):
+def catalog(request, category_slug):
+
+    page = request.GET.get('page', 1)  # Получить из ссылки номер страницы по ключу, дефолт значение - 1
 
     if category_slug == 'all':
         goods = Product.objects.all()
@@ -12,7 +14,7 @@ def catalog(request, category_slug, page=1):
         goods = get_list_or_404(Product.objects.filter(category__slug=category_slug))
 
     paginator = Paginator(goods, 3)
-    current_page = paginator.page(page)
+    current_page = paginator.page(int(page))
 
     context = {
         'title': 'Home - Каталог',
