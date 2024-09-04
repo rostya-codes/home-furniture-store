@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.postgres',
 
     'main',
     'goods',
@@ -88,8 +89,12 @@ WSGI_APPLICATION = 'home_furniture_store.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'home_furniture_db',
+        'USER': 'home_furniture_username',
+        'PASSWORD': 'home_furniture_password',
+        'HOST': 'localhost',
+        'PORT': '5432'
     }
 }
 
