@@ -9,4 +9,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('main.urls', namespace='main')),  # main app
     path('catalog/', include('goods.urls', namespace='catalog')),  # goods app
+    path('user/', include('users.urls', namespace='user')),
 ] + debug_toolbar_urls() + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
