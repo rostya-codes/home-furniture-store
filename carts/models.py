@@ -18,9 +18,10 @@ class CartQuerySet(models.QuerySet):
 
 class Cart(models.Model):
 
-    user = models.ForeignKey(to=User, on_delete=models.CASCADE, verbose_name='Пользователь')  # Кому принадлежит корзина
+    user = models.ForeignKey(to=User, on_delete=models.CASCADE, blank=True, null=True, verbose_name='Пользователь')  # Кому принадлежит корзина
     product = models.ForeignKey(to=Product, on_delete=models.CASCADE, verbose_name='Товар')  # Связанный продукт
     quantity = models.PositiveSmallIntegerField(default=0, verbose_name='Количество')
+    session_key = models.CharField(max_length=32, null=True, blank=True)  # Session key for unauthorized users
     created_timestamp = models.DateTimeField(auto_now_add=True, verbose_name='Дата добавления')  # Дата создания корзины
 
     class Meta:
