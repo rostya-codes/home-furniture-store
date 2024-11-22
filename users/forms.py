@@ -1,5 +1,3 @@
-from cProfile import label
-
 from django import forms
 from django.contrib.auth.forms import (AuthenticationForm, UserChangeForm,
                                        UserCreationForm)
@@ -45,7 +43,6 @@ class UserRegistrationForm(UserCreationForm):
     email = forms.CharField()
     password1 = forms.CharField()
     password2 = forms.CharField()
-
 
     # first_name = forms.CharField(
     #     widget=forms.TextInput(
@@ -112,7 +109,6 @@ class ProfileForm(UserChangeForm):
     last_name = forms.CharField()
     username = forms.CharField()
     email = forms.CharField()
-
 
     # image = forms.ImageField(
     #     widget=forms.FileInput(attrs={"class": "form-control mt-3"}), required=False
