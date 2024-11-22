@@ -10,4 +10,5 @@ urlpatterns = [
     path('catalog/', include('goods.urls', namespace='catalog')),  # goods app
     path('user/', include('users.urls', namespace='user')),
     path('cart/', include('carts.urls', namespace='cart')),
+    path('orders/', include('orders.urls', namespace='orders'))
 ] + debug_toolbar_urls() + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
