@@ -1,7 +1,7 @@
 from django.contrib import messages
-from django.forms import ValidationError
 from django.db import transaction
-from django.shortcuts import render, redirect
+from django.forms import ValidationError
+from django.shortcuts import redirect, render
 
 from carts.models import Cart
 from orders.forms import CreateOrderForm
@@ -23,8 +23,8 @@ def create_order(request):
                             user=user,
                             phone_number=form.cleaned_data['phone_number'],
                             requires_delivery=form.cleaned_data['requires_delivery'],
-                            delivery_address = form.cleaned_data['delivery_address'],
-                            payment_on_get = form.cleaned_data['payment_on_get']
+                            delivery_address=form.cleaned_data['delivery_address'],
+                            payment_on_get=form.cleaned_data['payment_on_get']
                         )
                         # Создать заказанные товары
                         for cart_item in cart_items:
