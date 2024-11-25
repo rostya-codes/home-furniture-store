@@ -12,12 +12,10 @@ class IndexView(TemplateView):
 
 
 # def index(request) -> HttpResponse:
-#
 #     context: dict[str, str] = {
 #         'title': 'Home - Главная',
 #         'content': 'Магазин мебели HOME',
 #     }
-#
 #     return render(request, 'main/index.html', context)
 
 
@@ -38,5 +36,4 @@ class AboutView(TemplateView):
 #         'content': 'О нас',
 #         'text_on_page': 'Текст о том почему этот магазин такой классный, и такой хороший товар.'
 #     }
-#
 #     return render(request, 'main/about.html', context)
