@@ -1,7 +1,7 @@
 from django.contrib import auth, messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.views import LoginView
+from django.contrib.auth.views import LoginView, LogoutView
 from django.db.models import Prefetch
 from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, render
@@ -108,8 +108,18 @@ class UserCartView(TemplateView):
         return context
 
 
-@login_required
-def logout(request):
-    messages.success(request, f'{request.user.username}, Вы вышли из аккаунта')  # Success message
-    auth.logout(request)
-    return redirect(reverse('main:index'))
+class UserLogoutView(LogoutView):
+    success_url = reverse_lazy('main:index')
+
+    def get_success_url(self):
+        redirect_page = self.request.POST.get('next', None)
+        if redirect_page:
+            return redirect_page
+        return reverse_lazy('main:index')
+
+
+# @login_required
+# def logout(request):
+#     messages.success(request, f'{request.user.username}, Вы вышли из аккаунта')  # Success message
+#     auth.logout(request)
+#     return redirect(reverse('main:index'))
