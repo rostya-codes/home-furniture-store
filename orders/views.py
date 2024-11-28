@@ -1,11 +1,8 @@
-from lib2to3.fixes.fix_input import context
-
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import transaction
 from django.forms import ValidationError
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect
 from django.views.generic import FormView
 from rest_framework.reverse import reverse_lazy
 
