@@ -2,6 +2,7 @@ from django.http import JsonResponse
 from django.template.loader import render_to_string
 from django.urls import reverse
 from django.views import View
+from requests import request
 
 from carts.mixins import CartMixin
 from carts.models import Cart
@@ -32,60 +33,34 @@ class CartAddView(CartMixin, View):
         return JsonResponse(response_data)
 
 
-def cart_change(request):
-    cart_id = request.POST.get('cart_id')
-    quantity = request.POST.get('quantity')
+class CartChangeView(CartMixin, View):
+    def post(self, request):
+        cart_id = request.POST.get('cart_id')
+        cart = self.get_cart(request, cart_id=cart_id)
+        cart.quantity = request.POST.get('quantity')
+        cart.save()
 
-    cart = Cart.objects.get(id=cart_id)
+        quantity = cart.quantity
 
-    cart.quantity = quantity
-    cart.save()
-    updated_quantity = cart.quantity
-
-    user_cart = get_user_carts(request)
-
-    context = {"carts": user_cart}
-
-    # if referer page is create_order add key orders: True to context
-    referer = request.META.get('HTTP_REFERER')
-    if reverse('orders:create_order') in referer:
-        context["order"] = True
-
-    cart_items_html = render_to_string(
-        "carts/includes/included_cart.html", context, request=request)
-
-    response_data = {
-        "message": "Количество изменено",
-        "cart_items_html": cart_items_html,
-        "quantity": updated_quantity,
-    }
-
-    return JsonResponse(response_data)
+        response_data = {
+            'message': 'Количество изменено',
+            'quantity': quantity,
+            'cart_items_html': self.render_cart(request),
+        }
+        return JsonResponse(response_data)
 
 
-def cart_remove(request):
-    cart_id = request.POST.get('cart_id')
+class CartRemoveView(CartMixin, View):
+    def post(self, request):
+        cart_id = request.POST.get('cart_id')
 
-    cart = Cart.objects.get(id=cart_id)
-    quantity = cart.quantity
-    cart.delete()
+        cart = self.get_cart(request, cart_id=cart_id)
+        quantity = cart.quantity
+        cart.delete()
 
-    user_cart = get_user_carts(request)
-
-    context = {"carts": user_cart}
-
-    # If referer page is create_order add key orders: True to context
-    referer = request.META.get('HTTP_REFERER')
-    if reverse('orders:create_order') in referer:
-        context["order"] = True
-
-    cart_items_html = render_to_string(
-        "carts/includes/included_cart.html", context, request=request)
-
-    response_data = {
-        "message": "Товар удален",
-        "cart_items_html": cart_items_html,
-        "quantity_deleted": quantity,
-    }
-
-    return JsonResponse(response_data)
+        response_data = {
+            'message': 'Товар удален из корзины',
+            'quantity_deleted': quantity,
+            'cart_items_html': self.render_cart(request)
+        }
+        return JsonResponse(response_data)
